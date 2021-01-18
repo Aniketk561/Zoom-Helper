@@ -6,4 +6,4 @@ class Config(object):
 	PASSWORD = os.environ.get('PASSWORD')
 	SCHEDULE = str(os.environ.get('SCHEDULE'))
 	USERID = os.environ.get('USER_ID')
-	URL = os.environ.get('Timetable Download Link')
+	URL = os.environ.get('URL')
