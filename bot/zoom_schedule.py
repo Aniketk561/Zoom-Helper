@@ -52,12 +52,12 @@ def timeTable(update, context):
     if Config.SCHEDULE == 'False':
         context.bot.send_message(chat_id=update.message.chat_id, text="Scheduler is Disabled")
     if Config.SCHEDULE == 'True':
-        text = "Today's meeting: \n"
+        text = "Today's Meeting: \n \n"
         for row in meeting_list:
             text+=str(row.name) + " at " + str(row.time).split()[1] + "\n"
         context.bot.send_message(chat_id=update.message.chat_id, text=text)
         try:
-            context.bot.send_document(chat_id=update.message.chat_id, document=open('bot/timetable.png', 'rb'), caption="Entire Schedule", timeout = 120)
+            context.bot.send_document(chat_id=update.message.chat_id, document=open('bot/zoom.csv', 'rb'), caption="Entire Schedule", timeout = 120)
         except:
             pass
 

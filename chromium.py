@@ -30,9 +30,21 @@ passwordStr = Config.PASSWORD
 appnameStr = Config.APP_NAME
 
 @run_async
-def restart(update, context):
+def exit(update, context):
     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
-    context.bot.send_message(chat_id=update.message.chat_id, text="Restarting, Please wait!")
+    try:
+        browser.find_element_by_xpath('//html').click()
+        time.sleep(3)
+        browser.find_element_by_xpath('//*[@id="wc-footer"]/div/div[3]/div/button').click()
+        time.sleep(2)
+        browser.find_element_by_xpath('//*[@id="wc-footer"]/div[2]/div[2]/div[3]/div/div/button').click()
+        time.sleep(2)
+    except:
+        pass
+    browser.save_screenshot("ss.png")
+    context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.UPLOAD_PHOTO)
+    context.bot.send_photo(chat_id=update.message.chat_id, photo=open('ss.png', 'rb'),caption="Exiting..!!", timeout = 120)
+    os.remove('ss.png')
     browser.quit()
     execl(executable, executable, "chromium.py")
 
@@ -123,7 +135,7 @@ def main():
     dp.add_handler(CommandHandler("timetable", timeTable))
     dp.add_handler(CommandHandler("disable_schedule", disable_schedule))
     dp.add_handler(CommandHandler("enable_schedule", enable_schedule))
-    dp.add_handler(CommandHandler("restart", restart))
+    dp.add_handler(CommandHandler("exit", exit))
     dp.add_handler(CommandHandler("status", status))
     logging.info("Bot started")
     updater.start_polling()
