@@ -25,10 +25,12 @@ def joinZoom(context, url_meet, passStr, userId):
             browser.find_element_by_xpath('//html').click()
             time.sleep(3)
             try:
-                number = browser.find_element_by_xpath('//*[@id="wc-footer"]/div/div[2]/button[1]/div/div/span').text
-                if(int(number) <5 and k>=30):
+                n = int(browser.find_element_by_xpath('//*[@id="wc-footer"]/div/div[2]/button[1]/div/div/span').text)
+                if(n<5 and k>=30):
                     raise ValueError('Most Attendees Already Left.')
             except:
+                time.sleep(10)
+                browser.find_element_by_xpath('//html').click()
                 try:
                     browser.save_screenshot("ss.png")
                     context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'),caption="Meeting Ended after " + str(k) + " minutes." + "\nExiting Meeting!", timeout = 120).message_id

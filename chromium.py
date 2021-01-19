@@ -53,10 +53,10 @@ def help(update, context):
     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
     if not os.access("bot/disabled_zoom", os.F_OK) and not os.access("bot/zoom.csv", os.F_OK):
         context.bot.send_message(chat_id=update.message.chat_id, text="\
-            List of notes in Bot: \n-/help \n-/restart \n-/status \n-/zoom <meetingid> <password>")
+            List of notes in Bot: \n-/help \n-/exit \n-/status \n-/zoom <meetingid> <password>")
     if os.access("bot/disabled_zoom", os.F_OK) or os.access("bot/zoom.csv", os.F_OK):
         context.bot.send_message(chat_id=update.message.chat_id, text="\
-            List of notes in Bot: \n-/help \n-/restart \n-/status \n-/disable_schedule \n-/enable_schedule \n-/timetable \n-/zoom <meetingid> <password>")
+            List of notes in Bot: \n-/help \n-/exit \n-/status \n-/disable_schedule \n-/enable_schedule \n-/timetable \n-/zoom <meetingid> <password>")
 
 @run_async
 def disable_schedule(update, context):
@@ -72,16 +72,16 @@ def disable_schedule(update, context):
             time.sleep(7)
             browser.get('https://dashboard.heroku.com/apps/' + appnameStr + '/settings')
             time.sleep(5)
-            browser.find_element_by_xpath('/html/body/div[4]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/button').click()
+            browser.find_element_by_xpath('/html/body/div[5]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/button').click()
             time.sleep(3)
             browser.find_element_by_xpath('//body').send_keys(Keys.PAGE_DOWN)
             time.sleep(3)
-            browser.find_element_by_xpath('/html/body/div[4]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/div/form/table/tbody/tr[5]/td[3]/button[1]').click()
+            browser.find_element_by_xpath('/html/body/div[5]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/div/form/table/tbody/tr[5]/td[3]/button[1]').click()
             time.sleep(3)
             schedule = browser.find_element_by_id('config-var-value')
             schedule.clear()
             schedule.send_keys('False')
-            browser.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/button[2]').click()
+            browser.find_element_by_xpath('/html/body/div[2]/div/div/div[3]/button[2]').click()
             context.bot.send_message(chat_id=update.message.chat_id, text="Disabled Schedule!")
             browser.quit()
             execl(executable, executable, "chromium.py")
@@ -103,16 +103,16 @@ def enable_schedule(update, context):
             time.sleep(7)
             browser.get('https://dashboard.heroku.com/apps/' + appnameStr + '/settings')
             time.sleep(5)
-            browser.find_element_by_xpath('/html/body/div[4]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/button').click()
+            browser.find_element_by_xpath('/html/body/div[5]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/button').click()
             time.sleep(3)
             browser.find_element_by_xpath('//body').send_keys(Keys.PAGE_DOWN)
             time.sleep(3)
-            browser.find_element_by_xpath('/html/body/div[4]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/div/form/table/tbody/tr[5]/td[3]/button[1]').click()
+            browser.find_element_by_xpath('/html/body/div[5]/main/div[2]/div[2]/ul/li[2]/div/div[2]/div/div/form/table/tbody/tr[5]/td[3]/button[1]').click()
             time.sleep(3)
             schedule = browser.find_element_by_id('config-var-value')
             schedule.clear()
             schedule.send_keys('True')
-            browser.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/button[2]').click()
+            browser.find_element_by_xpath('/html/body/div[2]/div/div/div[3]/button[2]').click()
             context.bot.send_message(chat_id=update.message.chat_id, text="Enabled Schedule!")
             browser.quit()
             execl(executable, executable, "chromium.py")
