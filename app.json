@@ -1,0 +1,53 @@
+{
+	"name": "Zoom Telegram Bot",
+  	"description": "Auto join Zoom Meeting simply through telegram",
+  	"repository": "https://github.com/wrecker3000/Zoom-Helper",
+  	"keywords": ["selenium", "chromedriver", "python"],
+  	"env": {
+    "BOT_TOKEN": {
+    	"description": "Telegram Bot Token"
+    	},
+
+    "USER_ID": {
+      "description": "Telegram Account User ID"
+    },
+
+    "SCHEDULE": {
+      "description": "Give Value True/False for Keeping Scheduler ON/OFF."
+    },
+
+    "APP_NAME": {
+      "description": "Name of Your Heorku Application"
+    },
+
+    "TZ": {
+      "description": "Time-Zone Setup Eg: For India, TZ= Asia/Kolkata"
+    },
+
+    "PASSWORD": {
+      "description": "Facebook account password"
+    	},
+
+    "FACEBOOK_ID": {
+      "description": "Facebook Account Email/Username "
+    	}
+
+  	},
+
+  	"buildpacks": [
+      {
+         "url": "heroku/python"
+      },
+
+
+      {
+      	"url": "https://github.com/heroku/heroku-buildpack-chromedriver"
+      },
+
+      {
+        "url": "https://github.com/wrecker3000/heroku-buildpack-google-chrome"
+      }
+  ],
+
+  "stack": "heroku-18"
+}
