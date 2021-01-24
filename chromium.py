@@ -17,12 +17,8 @@ if Config.SCHEDULE == 'True':
     r = requests.get(url, allow_redirects=True)
     try:
         os.remove('bot.zoom.csv')
-    except:
-        pass
-    try:
+    finally:
         open('bot/zoom.csv', 'wb').write(r.content)
-    except:
-        pass
 
 userId = Config.USERID
 usernameStr = Config.USERNAME
@@ -132,7 +128,7 @@ def main():
     dp.add_handler(CommandHandler("help", help))
     if Config.SCHEDULE == 'True':
         zJobQueue()
-    dp.add_handler(CommandHandler("timetable", timeTable))
+        dp.add_handler(CommandHandler("timetable", timeTable))
     dp.add_handler(CommandHandler("disable_schedule", disable_schedule))
     dp.add_handler(CommandHandler("enable_schedule", enable_schedule))
     dp.add_handler(CommandHandler("exit", exit))
