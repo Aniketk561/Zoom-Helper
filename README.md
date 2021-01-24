@@ -15,7 +15,7 @@ A bot written in python that auto attends your classes offline as its hosted on 
 ## Deploy to Heroku
 **One Click Deploy**
 
-<a x="https://heroku.com/deploy?template=">
+<a href="https://heroku.com/deploy?template=https://github.com/wrecker3000/Zoom-Helper/">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 
