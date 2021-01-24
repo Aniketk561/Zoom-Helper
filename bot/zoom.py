@@ -21,24 +21,8 @@ def joinZoom(context, url_meet, passStr, userId):
     def audioexit(context):
         global k
         global audio
-        if(audio == "Unmute"):
-            browser.find_element_by_xpath('//html').click()
-            time.sleep(3)
-            try:
-                n = int(browser.find_element_by_xpath('//*[@id="wc-footer"]/div/div[2]/button[1]/div/div/span').text)
-                if(n<5 and k>=30):
-                    raise ValueError('Most Attendees Already Left.')
-            except:
-                time.sleep(10)
-                browser.find_element_by_xpath('//html').click()
-                try:
-                    browser.save_screenshot("ss.png")
-                    context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'),caption="Meeting Ended after " + str(k) + " minutes." + "\nExiting Meeting!", timeout = 120).message_id
-                    os.remove('ss.png')
-                finally:
-                    browser.quit()
-                    execl(executable, executable, "chromium.py")
-        else:
+        k+=1
+        if(audio != "Unmute"):
             try:
                 browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[1]/span').text
             except:
@@ -58,17 +42,29 @@ def joinZoom(context, url_meet, passStr, userId):
                     context.bot.send_chat_action(chat_id=userId, action=ChatAction.UPLOAD_PHOTO)
                     context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'), caption="Joinied with Audio", timeout = 120).message_id
                     os.remove('ss.png')
-                    time.sleep(5)
                 except:
-                    pass
-            if(k>=20):
+                    logging.info("Waiting For Meeting..!")
+            finally:
+                if(k>=20):
+                    try:
+                        browser.save_screenshot("ss.png")
+                        context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'), caption="Meeting after " + str(k) + " minutes" , timeout = 120).message_id
+                        os.remove('ss.png')
+                    finally:
+                        context.bot.send_message(chat_id=userId, text="Seems Like This Meeting is Not now. \nExiting..!!")
+                        browser.quit()
+                        execl(executable, executable, "chromium.py")
+                        browser.refresh()
+                        time.sleep(10)
+        elif(k>=40):
+            try:
                 browser.save_screenshot("ss.png")
-                context.bot.send_chat_action(chat_id=userId, action=ChatAction.UPLOAD_PHOTO)
-                context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'), caption="Seems Like This Meeting is Not Today.", timeout = 120).message_id
+                context.bot.send_photo(chat_id=userId, photo=open('ss.png', 'rb'),caption="Meeting after " + str(k) + " minutes" , timeout = 120).message_id
                 os.remove('ss.png')
+            finally:
+                context.bot.send_message(chat_id=userId, text="Exiting..!!")
                 browser.quit()
                 execl(executable, executable, "chromium.py")
-        k+=1
     try:
         context.bot.send_chat_action(chat_id=userId, action=ChatAction.TYPING)
         browser.get('https://zoom.us/facebook_oauth_signin')
@@ -103,13 +99,13 @@ def joinZoom(context, url_meet, passStr, userId):
         print(str(e))
         browser.quit()
         execl(executable, executable, "chromium.py")
-    logging.info("DONE")
+    logging.info("Success")
     j = updater.job_queue
     j.run_repeating(audioexit, 60, 0)
 
 @run_async
 def zoom(update, context):
-    logging.info("DOING")
+    logging.info("Initiating Meeting Join Sequence")
     url_meet = update.message.text.split()[1]
     passStr = update.message.text.split()[2]
     userId = update.message.chat_id
