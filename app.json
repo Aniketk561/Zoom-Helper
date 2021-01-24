@@ -41,11 +41,11 @@
 
 
       {
-      	"url": "https://github.com/heroku/heroku-buildpack-chromedriver"
+      	"url": "heroku/chromedriver"
       },
 
       {
-        "url": "https://github.com/wrecker3000/heroku-buildpack-google-chrome"
+        "url": "heroku/google-chrome"
       }
   ],
 
